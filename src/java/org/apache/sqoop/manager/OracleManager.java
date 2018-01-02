@@ -552,10 +552,11 @@ public class OracleManager
    * @return the name of a Java type to hold the sql datatype, or null if none.
    */
   private String toDbSpecificJavaType(String tableName, String colName) {
-    if (columnTypeNames == null) {
+    // TODO(isharamet): Quickfix for mismatched table name and column type names map
+    // if (columnTypeNames == null) {
       columnTypeNames = getColumnTypeNames(tableName, options.getCall(),
         options.getSqlQuery());
-    }
+    // }
 
     String colTypeName = columnTypeNames.get(colName);
     if (colTypeName != null) {
@@ -573,6 +574,9 @@ public class OracleManager
       }
       if (colTypeName.toUpperCase().startsWith("TIMESTAMP")) {
         return "java.sql.Timestamp";
+      }
+      if (colTypeName.toUpperCase().startsWith("INTERVAL")) {
+        return "String";
       }
     }
     return null;

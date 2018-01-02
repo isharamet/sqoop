@@ -218,6 +218,14 @@ public abstract class ConnManager {
     case Types.VARBINARY:
     case Types.LONGVARBINARY:
       return Type.BYTES;
+    // TODO(isharamet): Add support for TIMESTAMPTZ and TIMESTAMPLTZ Oracle types
+    case -101:
+    case -102:
+      return Type.LONG;
+    // TODO(isharamet): Add support for INTERVALYM AND INTERVALDS Oracle types
+    case -103:
+    case -104:
+      return Type.STRING;
     default:
       throw new IllegalArgumentException("Cannot convert SQL type "
           + sqlType);
